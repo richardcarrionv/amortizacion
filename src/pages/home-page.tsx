@@ -131,140 +131,142 @@ const HomePage = () => {
 
   return (
 
-    <div>
-      <Navbar />
-      <div className=" flex items-center justify-center mt-10">
-        {
-          banco &&
-          <img width={"100px"} className="text-center mr-5" src={banco.img}/>
-        }
-        <h1 className="text-center text-5xl font-semibold mt-10">{banco && banco.nombre}</h1>
-      </div>
-      <div className="my-10 mx-12 grid grid-cols-[1fr_3fr]">
-        <div className="w-[305px]">
+    <Navbar >
+      <div>
 
-          <div className="space-y-6 mb-6 border rounded-xl p-4 w-[350px]">
-            {
-              //   <div className="space-y-2">
-              //     <label className="mb-4 text-sm font-medium">Banco</label>
-              //     <Select onValueChange={handleBancoChange}>
-              //       <SelectTrigger className="w-[300px]">
-              //         <SelectValue placeholder="Selecciona un banco" />
-              //       </SelectTrigger>
-              //       <SelectContent>
-              //         <SelectGroup>
-              //           <SelectLabel>Bancos</SelectLabel>
-              //           {bancos && bancos.map(banco => <SelectItem key={banco.id} value={banco.id} onClick={() => handleBancoChange(banco)}>{banco.nombre}</SelectItem>)}
-              //         </SelectGroup>
-              //       </SelectContent>
-              //     </Select>
-              //   </div>
-            }
+        <div className=" flex items-center justify-center mt-10">
+          {
+            banco &&
+            <img width={"100px"} className="text-center mr-5" src={banco.img} />
+          }
+          <h1 className="text-center text-5xl font-semibold mt-10">{banco && banco.nombre}</h1>
+        </div>
+        <div className="my-10 mx-12 grid grid-cols-[1fr_3fr]">
+          <div className="w-[305px]">
 
-            {banco &&
-              <div className="space-y-2">
-                <label className="mb-4 text-sm font-medium">Tipo de Credito</label>
-                <Select onValueChange={handleCreditoChange}>
-                  <SelectTrigger className="w-[300px]">
-                    <SelectValue placeholder="Selecciona un tipo de credito" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>Creditos</SelectLabel>
-                      {banco && banco.creditos.map(credito => <SelectItem key={banco.id + "-" + credito.id} value={credito.id}>{credito.nombre} ({credito.interes}%)</SelectItem>)}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </div>
-            }
+            <div className="space-y-6 mb-6 border rounded-xl p-4 w-[350px]">
+              {
+                //   <div className="space-y-2">
+                //     <label className="mb-4 text-sm font-medium">Banco</label>
+                //     <Select onValueChange={handleBancoChange}>
+                //       <SelectTrigger className="w-[300px]">
+                //         <SelectValue placeholder="Selecciona un banco" />
+                //       </SelectTrigger>
+                //       <SelectContent>
+                //         <SelectGroup>
+                //           <SelectLabel>Bancos</SelectLabel>
+                //           {bancos && bancos.map(banco => <SelectItem key={banco.id} value={banco.id} onClick={() => handleBancoChange(banco)}>{banco.nombre}</SelectItem>)}
+                //         </SelectGroup>
+                //       </SelectContent>
+                //     </Select>
+                //   </div>
+              }
 
-            {
-              credito &&
-              <div className="space-y-2">
-                <label className="pb-4 text-sm font-medium">Sistema</label>
-                <Select onValueChange={handleSistemaChange}>
-                  <SelectTrigger className="w-[300px]">
-                    <SelectValue placeholder="Selecciona un sistema" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>Sistemas</SelectLabel>
-                      <SelectItem value="frances">Frances</SelectItem>
-                      <SelectItem value="aleman">Aleman</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </div>
+              {banco &&
+                <div className="space-y-2">
+                  <label className="mb-4 text-sm font-medium">Tipo de Credito</label>
+                  <Select onValueChange={handleCreditoChange}>
+                    <SelectTrigger className="w-[300px]">
+                      <SelectValue placeholder="Selecciona un tipo de credito" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Creditos</SelectLabel>
+                        {banco && banco.creditos.map(credito => <SelectItem key={banco.id + "-" + credito.id} value={credito.id}>{credito.nombre} ({credito.interes}%)</SelectItem>)}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
+              }
 
-            }
-          </div>
+              {
+                credito &&
+                <div className="space-y-2">
+                  <label className="pb-4 text-sm font-medium">Sistema</label>
+                  <Select onValueChange={handleSistemaChange}>
+                    <SelectTrigger className="w-[300px]">
+                      <SelectValue placeholder="Selecciona un sistema" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Sistemas</SelectLabel>
+                        <SelectItem value="frances">Frances</SelectItem>
+                        <SelectItem value="aleman">Aleman</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
 
-          {tipo && (
-            <Form {...form}>
-              <form className="space-y-6 border rounded-xl p-4 w-[350px]" onSubmit={form.handleSubmit(onSubmit)}>
+              }
+            </div>
 
-                <FormField
-                  control={form.control}
-                  name="cp"
-                  render={({ field }) => (
-                    <FormItem className="w-[300px]">
-                      <FormLabel>Cantidad</FormLabel>
-                      <FormControl>
-                        <Input {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+            {tipo && (
+              <Form {...form}>
+                <form className="space-y-6 border rounded-xl p-4 w-[350px]" onSubmit={form.handleSubmit(onSubmit)}>
 
-                <FormField
-                  control={form.control}
-                  name="seguro"
-                  render={({ field }) => (
-                    <FormItem className="w-[300px]">
-                      <FormLabel>Seguro</FormLabel>
-                      <FormControl>
-                        <Input {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                {credito &&
                   <FormField
                     control={form.control}
-                    name="n"
+                    name="cp"
                     render={({ field }) => (
                       <FormItem className="w-[300px]">
-                        <FormLabel>Plazo (Plazo maximo: {credito.plazo_meses})</FormLabel>
+                        <FormLabel>Cantidad</FormLabel>
                         <FormControl>
                           <Input {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
-                  />}
+                  />
 
-                <Button type="submit" className="w-full">Calcular</Button>
-              </form>
-            </Form>
-          )}
+                  <FormField
+                    control={form.control}
+                    name="seguro"
+                    render={({ field }) => (
+                      <FormItem className="w-[300px]">
+                        <FormLabel>Seguro</FormLabel>
+                        <FormControl>
+                          <Input {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  {credito &&
+                    <FormField
+                      control={form.control}
+                      name="n"
+                      render={({ field }) => (
+                        <FormItem className="w-[300px]">
+                          <FormLabel>Plazo (Plazo maximo: {credito.plazo_meses})</FormLabel>
+                          <FormControl>
+                            <Input {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />}
+
+                  <Button type="submit" className="w-full">Calcular</Button>
+                </form>
+              </Form>
+            )}
 
 
-        </div>
-        {tabla && (
-          <div className="flex flex-col items-end">
-            <div className="flex w-full items-center justify-between">
-              <h1 className="text-3xl font-bold">Tabla de amortizacion</h1>
-              <Button className="w-[200px] my-4" onClick={handleExport}>Exportar</Button>
-            </div>
-            <TablaAmortizacion rows={tabla} />
           </div>
-        )}
+          {tabla && (
+            <div className="flex flex-col items-end">
+              <div className="flex w-full items-center justify-between">
+                <h1 className="text-3xl font-bold">Tabla de amortizacion</h1>
+                <Button className="w-[200px] my-4" onClick={handleExport}>Exportar</Button>
+              </div>
+              <TablaAmortizacion rows={tabla} />
+            </div>
+          )}
+        </div>
+        <Toaster />
       </div>
-      <Toaster />
-    </div>
+    </Navbar>
   )
 }
 

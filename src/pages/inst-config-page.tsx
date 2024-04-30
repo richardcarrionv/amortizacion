@@ -76,82 +76,84 @@ export const InstitucionConfigPage = () => {
   }
 
   return (
-    <div>
-      <Navbar />
-      <div className="h-[100vh] w-full flex items-center justify-center">
-        <div className="container mx-auto border rounded-xl py-6">
-          <h1 className="text-3xl font-semibold mb-4">Institucion</h1>
-          <div className="mb-4">
+    <Navbar >
 
-            <Form {...form}>
-              <form className="w-full">
-                <div className="flex items-end gap-x-4">
+      <div>
+        <div className="h-[100vh-80px] w-full flex items-center justify-center">
+          <div className="container mx-auto border rounded-xl py-6">
+            <h1 className="text-3xl font-semibold mb-4">Institucion</h1>
+            <div className="mb-4">
 
-                  <FormField
-                    control={form.control}
-                    name="nombre"
-                    render={({ field }) => (
-                      <FormItem className="w-[400px]">
-                        <FormLabel>Nombre</FormLabel>
-                        <FormControl>
-                          <Input {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <Button onClick={handleSave} type="button" className="bg-green-600 w-[200px]">Guardar</Button>
+              <Form {...form}>
+                <form className="w-full">
+                  <div className="flex items-end gap-x-4">
+
+                    <FormField
+                      control={form.control}
+                      name="nombre"
+                      render={({ field }) => (
+                        <FormItem className="w-[400px]">
+                          <FormLabel>Nombre</FormLabel>
+                          <FormControl>
+                            <Input {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <Button onClick={handleSave} type="button" className="bg-green-600 w-[200px]">Guardar</Button>
+                  </div>
+
+                  <div className="flex items-end gap-x-4 mt-6">
+                    <FormField
+                      control={form.control}
+                      name="img"
+                      render={({ field }) => (
+                        <FormItem className="w-[800px]">
+                          <FormLabel>URL de la imagen</FormLabel>
+                          <FormControl>
+                            <Input {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <Button onClick={handleSaveImg} type="button" className="bg-green-600 w-[200px]">Guardar</Button>
+                  </div>
+                </form>
+              </Form>
+            </div>
+            <h2 className="mt-8 text-3xl font-semibold mb-4">Creditos</h2>
+            <div className="grid grid-cols-4 gap-x-4">
+              {institucion.creditos.map(credito => (
+                <CreditoForm credito={credito} key={credito.id} />
+              ))}
+            </div>
+
+            <h2 className="mt-8 text-3xl font-semibold mb-4">Inversiones</h2>
+            <div className="flex items-end gap-x-4">
+              <div className="border p-4 rounded-xl">
+                <h1 className="text-xl font-semibold">En meses</h1>
+                <div className="flex gap-x-2">
+                  {institucion.inversiones.map(inv => (
+                    inv.tipo == "mes" && <InversionForm inversion={inv} key={inv.id} />
+                  ))}
                 </div>
-
-                <div className="flex items-end gap-x-4 mt-6">
-                  <FormField
-                    control={form.control}
-                    name="img"
-                    render={({ field }) => (
-                      <FormItem className="w-[800px]">
-                        <FormLabel>URL de la imagen</FormLabel>
-                        <FormControl>
-                          <Input {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <Button onClick={handleSaveImg} type="button" className="bg-green-600 w-[200px]">Guardar</Button>
+              </div>
+              <div className="border p-4 rounded-xl">
+                <h1 className="text-xl font-semibold">En días</h1>
+                <div className="flex gap-x-2">
+                  {institucion.inversiones.map(inv => (
+                    inv.tipo == "dia" && <InversionForm inversion={inv} key={inv.id} />
+                  ))}
                 </div>
-              </form>
-            </Form>
-          </div>
-          <h2 className="mt-8 text-3xl font-semibold mb-4">Creditos</h2>
-          <div className="grid grid-cols-4 gap-x-4">
-            {institucion.creditos.map(credito => (
-              <CreditoForm credito={credito} key={credito.id} />
-            ))}
-          </div>
-
-          <h2 className="mt-8 text-3xl font-semibold mb-4">Inversiones</h2>
-          <div className="flex items-end gap-x-4">
-            <div className="border p-4 rounded-xl">
-              <h1 className="text-xl font-semibold">En meses</h1>
-              <div className="flex gap-x-2">
-                {institucion.inversiones.map(inv => (
-                  inv.tipo == "mes" && <InversionForm inversion={inv} key={inv.id} />
-                ))}
               </div>
             </div>
-            <div className="border p-4 rounded-xl">
-              <h1 className="text-xl font-semibold">En días</h1>
-              <div className="flex gap-x-2">
-                {institucion.inversiones.map(inv => (
-                  inv.tipo == "dia" && <InversionForm inversion={inv} key={inv.id} />
-                ))}
-              </div>
-            </div>
           </div>
+          <Toaster />
         </div>
-        <Toaster />
       </div>
-    </div>
+    </Navbar>
   );
 };
 

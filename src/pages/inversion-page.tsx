@@ -71,7 +71,7 @@ const InversionPage = () => {
     if (inv && cantidad) {
       const i = parseFloat(inv.interes)
       const c = parseFloat(cantidad)
-      setTotal(((i/100)*c)+c)
+      setTotal(((i / 100) * c) + c)
     }
   }, [inv, cantidad])
 
@@ -81,7 +81,13 @@ const InversionPage = () => {
 
     <div>
       <Navbar />
-      <h1 className="text-center text-5xl font-semibold mt-10">{banco && banco.nombre}</h1>
+      <div className=" flex items-center justify-center mt-10">
+        {
+          banco &&
+          <img width={"100px"} className="text-center mr-5" src={banco.img} />
+        }
+        <h1 className="text-center text-5xl font-semibold mt-10">{banco && banco.nombre}</h1>
+      </div>
       <div className="my-10 mx-12 flex flex-col items-center">
         <div className="w-[305px]">
 
@@ -89,7 +95,7 @@ const InversionPage = () => {
 
             <div className="space-y-2">
               <label className="mb-4 text-sm font-medium">Cantidad</label>
-              <Input value={cantidad} onChange={e => setCantidad(e.target.value)} type="number"/>
+              <Input value={cantidad} onChange={e => setCantidad(e.target.value)} type="number" />
             </div>
 
             <div className="space-y-2">
