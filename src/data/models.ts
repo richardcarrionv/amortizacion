@@ -22,6 +22,7 @@ export type InversionSchema = z.infer<typeof inversionSchema>;
 export const institucionSchema = z.object({
   id: z.string(),
   nombre: z.string().min(2).max(50),
+  img: z.string(),
   creditos: z.array(creditoSchema),
   inversiones: z.array(inversionSchema),
 })

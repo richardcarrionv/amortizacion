@@ -52,6 +52,7 @@ const HomePage = () => {
   useEffect(() => {
     api.get("/instituciones/").then(res => {
       setBancos(res.data)
+      console.log(res.data)
       setBanco(res.data[0])
     })
   }, [])
@@ -132,7 +133,13 @@ const HomePage = () => {
 
     <div>
       <Navbar />
-      <h1 className="text-center text-5xl font-semibold mt-10">{banco && banco.nombre}</h1>
+      <div className=" flex items-center justify-center mt-10">
+        {
+          banco &&
+          <img width={"100px"} className="text-center mr-5" src={banco.img}/>
+        }
+        <h1 className="text-center text-5xl font-semibold mt-10">{banco && banco.nombre}</h1>
+      </div>
       <div className="my-10 mx-12 grid grid-cols-[1fr_3fr]">
         <div className="w-[305px]">
 

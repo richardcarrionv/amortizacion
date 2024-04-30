@@ -27,6 +27,7 @@ export const InstitucionConfigPage = () => {
       nombre: "",
       creditos: [],
       id: "",
+      img: "",
     }
   })
 
@@ -63,30 +64,61 @@ export const InstitucionConfigPage = () => {
     })
   }
 
+  const handleSaveImg = () => {
+    const img = form.getValues("img")
+    api.patch(`/instituciones/${id}/`, { img: img }).then(res => {
+      console.log(res)
+      toast({
+        title: "Correcto",
+        description: "Se actualizo la imagen de la institucion exitosamente",
+      })
+    })
+  }
+
   return (
     <div>
       <Navbar />
-      <div className="h-[80vh] w-full flex items-center justify-center">
+      <div className="h-[100vh] w-full flex items-center justify-center">
         <div className="container mx-auto border rounded-xl py-6">
           <h1 className="text-3xl font-semibold mb-4">Institucion</h1>
           <div className="mb-4">
 
             <Form {...form}>
-              <form className="grid grid-cols-[3fr_1fr] items-end gap-x-4">
-                <FormField
-                  control={form.control}
-                  name="nombre"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Nombre</FormLabel>
-                      <FormControl>
-                        <Input {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <Button onClick={handleSave} type="button" className="bg-green-600">Guardar</Button>
+              <form className="w-full">
+                <div className="flex items-end gap-x-4">
+
+                  <FormField
+                    control={form.control}
+                    name="nombre"
+                    render={({ field }) => (
+                      <FormItem className="w-[400px]">
+                        <FormLabel>Nombre</FormLabel>
+                        <FormControl>
+                          <Input {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <Button onClick={handleSave} type="button" className="bg-green-600 w-[200px]">Guardar</Button>
+                </div>
+
+                <div className="flex items-end gap-x-4 mt-6">
+                  <FormField
+                    control={form.control}
+                    name="img"
+                    render={({ field }) => (
+                      <FormItem className="w-[800px]">
+                        <FormLabel>URL de la imagen</FormLabel>
+                        <FormControl>
+                          <Input {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <Button onClick={handleSaveImg} type="button" className="bg-green-600 w-[200px]">Guardar</Button>
+                </div>
               </form>
             </Form>
           </div>
