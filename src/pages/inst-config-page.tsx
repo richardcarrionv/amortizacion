@@ -12,13 +12,14 @@ import { InstitucionSchema, institucionSchema } from "@/data/models";
 import { Toaster } from "@/components/ui/toaster";
 import { useToast } from "@/components/ui/use-toast";
 import { Navbar } from "@/components/navbar-home";
+import { InversionForm } from "@/forms/inversion-form";
 
 export const InstitucionConfigPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate()
   const [institucion, setInstitucion] = useState<InstitucionSchema | null>(null);
 
-  const {toast} = useToast()
+  const { toast } = useToast()
 
   const form = useForm<InstitucionSchema>({
     resolver: zodResolver(institucionSchema),
@@ -33,7 +34,7 @@ export const InstitucionConfigPage = () => {
   useEffect(() => {
     const inst = localStorage.getItem("INSTITUCION")
 
-    if (inst!=id) navigate("/login")
+    if (inst != id) navigate("/login")
 
     const fetchInstitucion = async () => {
       api.get("/instituciones/" + id + "/").then(res => {
@@ -64,7 +65,7 @@ export const InstitucionConfigPage = () => {
 
   return (
     <div>
-      <Navbar/>
+      <Navbar />
       <div className="h-[80vh] w-full flex items-center justify-center">
         <div className="container mx-auto border rounded-xl py-6">
           <h1 className="text-3xl font-semibold mb-4">Institucion</h1>
@@ -95,8 +96,28 @@ export const InstitucionConfigPage = () => {
               <CreditoForm credito={credito} key={credito.id} />
             ))}
           </div>
+
+          <h2 className="mt-8 text-3xl font-semibold mb-4">Inversiones</h2>
+          <div className="flex items-end gap-x-4">
+            <div className="border p-4 rounded-xl">
+              <h1 className="text-xl font-semibold">En meses</h1>
+              <div className="flex gap-x-2">
+                {institucion.inversiones.map(inv => (
+                  inv.tipo == "mes" && <InversionForm inversion={inv} key={inv.id} />
+                ))}
+              </div>
+            </div>
+            <div className="border p-4 rounded-xl">
+              <h1 className="text-xl font-semibold">En días</h1>
+              <div className="flex gap-x-2">
+                {institucion.inversiones.map(inv => (
+                  inv.tipo == "dia" && <InversionForm inversion={inv} key={inv.id} />
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
-        <Toaster/>
+        <Toaster />
       </div>
     </div>
   );

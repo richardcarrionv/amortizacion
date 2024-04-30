@@ -70,7 +70,7 @@ interface TablaAmortizacionProps {
 
 const TablaAmortizacion = ({ rows }: TablaAmortizacionProps) => {
   return (
-      <div className="border rounded-xl w-full max-h-[80vh] overflow-auto">
+      <div className="border rounded-xl w-full max-h-[70vh] overflow-auto">
         <Table className="w-full">
           <TableHeader>
             <TableRow>

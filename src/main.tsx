@@ -9,6 +9,7 @@ import { LoginPage } from './pages/login-page.tsx';
 import { HomePage } from './pages/home-page.tsx';
 import { InstitucionConfigPage } from './pages/inst-config-page.tsx';
 import { CreateAdminPage } from './pages/create-admin.tsx';
+import { InversionPage } from './pages/inversion-page.tsx';
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <HomePage />,
+  },
+  {
+    path: "/inversiones",
+    element: <InversionPage />,
   },
   {
     path: "/institucion/:id",

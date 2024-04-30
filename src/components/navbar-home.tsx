@@ -16,8 +16,8 @@ const Navbar = () => {
           <Link to="/" className="text-white text-xl font-bold">
             Amortizacion
           </Link>
-          <Link to="/credito" className="text-white text-xl font-bold">
-            Credito
+          <Link to="/inversiones" className="text-white text-xl font-bold">
+            Inversiones
           </Link>
         </div>
         {localStorage.getItem("INSTITUCION") ?

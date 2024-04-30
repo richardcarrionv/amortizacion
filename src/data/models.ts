@@ -9,10 +9,21 @@ export const creditoSchema = z.object({
 })
 export type CreditoSchema = z.infer<typeof creditoSchema>;
 
+
+export const inversionSchema = z.object({
+  id: z.any(),
+  tipo: z.string(),
+  tiempo: z.any(),
+  interes: z.any(),
+})
+
+export type InversionSchema = z.infer<typeof inversionSchema>;
+
 export const institucionSchema = z.object({
   id: z.string(),
   nombre: z.string().min(2).max(50),
   creditos: z.array(creditoSchema),
+  inversiones: z.array(inversionSchema),
 })
 export type InstitucionSchema = z.infer<typeof institucionSchema>;
 
@@ -28,6 +39,7 @@ export interface Institucion {
   id: number,
   nombre: string,
   creditos: Credito[],
+  inversiones: InversionSchema[],
 }
 
 export interface Admin {
