@@ -31,7 +31,12 @@ const LoginPage = () => {
     api.post("/login/", values).then(res => {
       if (res.status == 200) {
         localStorage.setItem("INSTITUCION", res.data.institucion)
-        navigate("/institucion/" + res.data.institucion + "/")
+        localStorage.setItem("ADMIN", res.data.admin)
+        if (res.data.admin) {
+          navigate("/config")
+        } else {
+          navigate("/institucion/" + res.data.institucion + "/")
+        }
       }
     })
   }
@@ -47,7 +52,7 @@ const LoginPage = () => {
               name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>Usuario</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>

@@ -8,6 +8,7 @@ import {
 import { LoginPage } from './pages/login-page.tsx';
 import { HomePage } from './pages/home-page.tsx';
 import { InstitucionConfigPage } from './pages/inst-config-page.tsx';
+import { CreateAdminPage } from './pages/create-admin.tsx';
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
   {
     path: "/institucion/:id",
     element: <InstitucionConfigPage />,
+  },
+  {
+    path: "/config/crear-admin",
+    element: <CreateAdminPage />,
   },
 ]);
 

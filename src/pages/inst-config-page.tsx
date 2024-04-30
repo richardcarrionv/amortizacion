@@ -9,11 +9,16 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { zodResolver } from "@hookform/resolvers/zod"
 import { CreditoForm } from "@/forms/credit-form";
 import { InstitucionSchema, institucionSchema } from "@/data/models";
+import { Toaster } from "@/components/ui/toaster";
+import { useToast } from "@/components/ui/use-toast";
+import { Navbar } from "@/components/navbar-home";
 
 export const InstitucionConfigPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate()
   const [institucion, setInstitucion] = useState<InstitucionSchema | null>(null);
+
+  const {toast} = useToast()
 
   const form = useForm<InstitucionSchema>({
     resolver: zodResolver(institucionSchema),
@@ -50,39 +55,48 @@ export const InstitucionConfigPage = () => {
   const handleSave = () => {
     const name = form.getValues("nombre")
     api.patch(`/instituciones/${id}/`, { nombre: name }).then(res => {
-      console.log(res)
+      toast({
+        title: "Correcto",
+        description: "La institucion se actulizo exitosamente",
+      })
     })
   }
 
   return (
-    <div className="container mx-auto">
-      <h1 className="text-3xl font-semibold mb-4">Institucion</h1>
-      <div className="mb-4">
+    <div>
+      <Navbar/>
+      <div className="h-[80vh] w-full flex items-center justify-center">
+        <div className="container mx-auto border rounded-xl py-6">
+          <h1 className="text-3xl font-semibold mb-4">Institucion</h1>
+          <div className="mb-4">
 
-        <Form {...form}>
-          <form className="grid grid-cols-[3fr_1fr] items-end gap-x-4">
-            <FormField
-              control={form.control}
-              name="nombre"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Nombre</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button onClick={handleSave} type="button">Guardar</Button>
-          </form>
-        </Form>
-      </div>
-      <h2 className="text-xl font-semibold mb-4">Creditos</h2>
-      <div className="grid grid-cols-4 gap-x-4">
-        {institucion.creditos.map(credito => (
-          <CreditoForm credito={credito} key={credito.id} />
-        ))}
+            <Form {...form}>
+              <form className="grid grid-cols-[3fr_1fr] items-end gap-x-4">
+                <FormField
+                  control={form.control}
+                  name="nombre"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Nombre</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button onClick={handleSave} type="button" className="bg-green-600">Guardar</Button>
+              </form>
+            </Form>
+          </div>
+          <h2 className="mt-8 text-3xl font-semibold mb-4">Creditos</h2>
+          <div className="grid grid-cols-4 gap-x-4">
+            {institucion.creditos.map(credito => (
+              <CreditoForm credito={credito} key={credito.id} />
+            ))}
+          </div>
+        </div>
+        <Toaster/>
       </div>
     </div>
   );
