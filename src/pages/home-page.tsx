@@ -12,11 +12,9 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const configSchema = z.object({
-  seguro: z.any(),
-  cantidad: z.any(),
-  tiempo: z.any(),
-  porcentaje: z.any(),
-  plazo: z.any(),
+  cp: z.any(),
+  n: z.any(),
+  i: z.any(),
   tipo: z.any(),
 })
 export type ConfigSchema = z.infer<typeof configSchema>;
@@ -27,11 +25,9 @@ const HomePage = () => {
   const form = useForm<ConfigSchema>({
     resolver: zodResolver(configSchema),
     defaultValues: {
-      seguro: '',
-      cantidad: '',
-      tiempo: '',
-      porcentaje: '',
-      plazo: '',
+      cp: '',
+      n: '',
+      i: '',
       tipo: '',
     }
   })
@@ -61,17 +57,18 @@ const HomePage = () => {
     if (banco) {
       const find = banco.creditos.find(c => c.id == creditoId);
       setCredito(prev => find ? find : prev)
-      form.setValue("porcentaje", find?.interes)
+      form.setValue("i", find?.interes)
     }
   }
 
   const handleSistemaChange = (sistema: any) => {
+    console.log("Handle: ", sistema)
     setTipo(sistema)
     form.setValue("tipo", sistema)
   }
 
   const onSubmit = (values: ConfigSchema) => {
-    const tabla = calculate(values.seguro, values.cantidad, values.tiempo, values.porcentaje, values.plazo, values.tipo)
+    const tabla = calculate( values.cp, values.n, values.i, values.tipo)
     setTabla(tabla)
     console.log(tabla)
   }
@@ -80,6 +77,7 @@ const HomePage = () => {
 
     <div className="grid grid-cols-[1fr_3fr]">
       <div className="m-10 w-[305px]">
+
 
 
         <div className="space-y-6 mb-6">
@@ -126,8 +124,8 @@ const HomePage = () => {
                 <SelectContent>
                   <SelectGroup>
                     <SelectLabel>Sistemas</SelectLabel>
-                    <SelectItem value={"frances"}>Frances</SelectItem>
-                    <SelectItem value={"aleman"}>Aleman</SelectItem>
+                    <SelectItem value="frances">Frances</SelectItem>
+                    <SelectItem value="aleman">Aleman</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
@@ -142,36 +140,10 @@ const HomePage = () => {
 
               <FormField
                 control={form.control}
-                name="seguro"
-                render={({ field }) => (
-                  <FormItem className="w-[300px]">
-                    <FormLabel>Seguro</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="cantidad"
+                name="cp"
                 render={({ field }) => (
                   <FormItem className="w-[300px]">
                     <FormLabel>Cantidad</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="tiempo"
-                render={({ field }) => (
-                  <FormItem className="w-[300px]">
-                    <FormLabel>Tiempo</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -183,17 +155,18 @@ const HomePage = () => {
               {credito && <span>Plazo maximo: {credito.plazo_meses}</span>}
               <FormField
                 control={form.control}
-                name="plazo"
+                name="n"
                 render={({ field }) => (
                   <FormItem className="w-[300px]">
-                    <FormLabel>Plazo</FormLabel>
+                    <FormLabel>Tiempo</FormLabel>
                     <FormControl>
-                      <Input {...field} type="number" max={credito ? credito.plazo_meses : 0} />
+                      <Input {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
+
               <Button type="submit" className="w-full">Calcular</Button>
             </form>
           </Form>

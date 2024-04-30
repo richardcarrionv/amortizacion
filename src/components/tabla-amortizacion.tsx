@@ -8,46 +8,51 @@ import {
   TableRow,
 } from "@/components/ui/table"
 export interface AmortizacionRow {
-  periodo: any,
+  no: any,
   cuota: any,
   interes: any,
-  amortizacion: any,
+  capital: any,
   saldo: any,
 }
 
 export const calculate = (
-  seguro: any,
-  cantidadInicial: any,
-  tiempo: any,
-  porcentaje: any,
-  plazo: any,
+  cp: any,
+  n: any,
+  i: any,
   tipo: any
 ): AmortizacionRow[] => {
   const sistema = []
 
-  let saldoPendiente = cantidadInicial;
-  const tasaInteres = porcentaje / 100;
-  let cuota, interes, amortizacion;
+  let saldo = cp;
+  const iMen = (i / 12) / 100;
+  let cuota, interes, capital;
 
-  for (let periodo = 1; periodo <= plazo; periodo++) {
+  for (let no = 1; no <= n; no++) {
     if (tipo == 'frances') {
-      cuota = cantidadInicial * (tasaInteres / (1 - Math.pow(1 + tasaInteres, -tiempo))) + seguro;
-      interes = saldoPendiente * tasaInteres;
-      amortizacion = cuota - interes;
+      cuota = cp * (iMen / (1 - Math.pow(1 + iMen, -n)))
+      interes = saldo * iMen;
+      capital = cuota - interes;
+      saldo = saldo - capital
     } else {
-      cuota = (cantidadInicial + seguro) / tiempo;
-      interes = saldoPendiente * tasaInteres;
-      amortizacion = cuota - interes;
+      capital = cp /n;
+      interes = saldo * iMen;
+      cuota = interes + capital;
+      saldo = saldo - capital;
     }
-    saldoPendiente -= amortizacion;
 
-    sistema.push({
-      periodo: periodo.toString(),
-      cuota: cuota,
-      interes: interes,
-      amortizacion: amortizacion,
-      saldo: saldoPendiente,
-    });
+    const row = {
+      no: no.toString(),
+      cuota: cuota.toFixed(2),
+      interes: interes.toFixed(2),
+      capital: capital.toFixed(2),
+      saldo: saldo.toFixed(2),
+    }
+
+    if (no == 1) {
+      console.log(row)
+    }
+
+    sistema.push(row);
   }
   return sistema
 }
@@ -70,16 +75,16 @@ const TablaAmortizacion = ({ rows }: TablaAmortizacionProps) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {rows.map((row,index) => (
+        {rows.map((row, index) => (
           <TableRow key={index}>
-            <TableCell className="text-right">{row.periodo}</TableCell>
+            <TableCell className="text-right">{row.no}</TableCell>
             <TableCell className="text-right">{row.cuota}</TableCell>
             <TableCell className="text-right">{row.interes}</TableCell>
-            <TableCell className="text-right">{row.amortizacion}</TableCell>
+            <TableCell className="text-right">{row.capital}</TableCell>
             <TableCell className="text-right">{row.saldo}</TableCell>
           </TableRow>
         ))}
-        </TableBody>
+      </TableBody>
     </Table>
   )
 }
